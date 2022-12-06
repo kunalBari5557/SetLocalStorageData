@@ -18,7 +18,7 @@ function Home() {
 
     return (
         <div>
-            <h1>Dasboard Page </h1>
+            <h1>Dashboard Page </h1>
             <Stack direction="row">
                 <Avatar sx={{ marginLeft: "57rem", marginTop: "-3.4rem" }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 <Button sx={{ marginTop: "-3.2rem", marginLeft: "2rem" }} variant="contained" color="success" onClick={logout} className="logout">LogOut</Button>
