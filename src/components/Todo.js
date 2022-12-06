@@ -26,7 +26,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
         height: 100,
         backgroundColor:"rgb(229 229 229);"
       }}>
-        <Card sx={{height:100}}>
+        <Card sx={{height:100, backgroundColor:"rgb(203 213 225)"}}>
     <div
       className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
       key={index}
