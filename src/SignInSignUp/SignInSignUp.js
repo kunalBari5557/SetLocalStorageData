@@ -139,7 +139,7 @@ function SignInSignupWithLocalStorage(){
                             onChange={onInputChange}
                             onBlur={validateInput}
                             /><br></br>
-                            {error.password && <span className='err'>{error.password}</span>}
+                            {error.password && <span className='err' style={{color:"red"}}>{error.password}</span>}
                         </div>
                         <div className="input_space">
                             <input placeholder="Confirm Password" type='password' ref={password}
@@ -147,7 +147,7 @@ function SignInSignupWithLocalStorage(){
                             onChange={onInputChange}
                             onBlur={validateInput}
                             /><br></br>
-                             {error.confirmPassword && <span className='err'>{error.confirmPassword}</span>}
+                             {error.confirmPassword && <span className='err' style={{color:"red"}}>{error.confirmPassword}</span>}
                         </div>
                         <Button variant="contained"  onClick={handleClick}>Sign Up</Button>
                 </div>)
