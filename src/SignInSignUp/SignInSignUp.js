@@ -8,12 +8,14 @@ function SignInSignupWithLocalStorage(){
    const email=useRef()
    const phone=useRef()
    const password=useRef()
+   const ConfirmPassword=useRef()
    const [showHome,setShowHome]=useState(false)
    const [show,setShow]=useState(false)
     const localSignUp=localStorage.getItem("signUp")
     const localEmail=localStorage.getItem("email")
     const localPhone=localStorage.getItem("phone")
     const localPassword=localStorage.getItem("password")
+    const localConfirmPassword=localStorage.getItem("ConfirmPassword")
     const localName=localStorage.getItem("name")
    useEffect(()=>{
     if(localSignUp){
@@ -24,11 +26,13 @@ function SignInSignupWithLocalStorage(){
     }
    })
    const handleClick=()=>{
-       if(phone.current.value&&email.current.value&&password.current.value)
+       if(phone.current.value&&email.current.value&&password.current.value&&name.current.value)
       {
+        localStorage.setItem("name",name.current.value)
         localStorage.setItem("phone",phone.current.value)
         localStorage.setItem("email",email.current.value)
         localStorage.setItem("password",password.current.value)
+        localStorage.setItem("ConfirmPassword",ConfirmPassword.current.value)
         localStorage.setItem("signUp",email.current.value)
         // alert("Account created successfully!!")
         window.location.reload()
@@ -74,6 +78,9 @@ function SignInSignupWithLocalStorage(){
                         </div>
                         <div className="input_space">
                             <input placeholder="Password" type='password' ref={password} />
+                        </div>
+                        <div className="input_space">
+                            <input placeholder="Confirm Password" type='password' ref={ConfirmPassword} />
                         </div>
                         <Button variant="contained"  onClick={handleClick}>Sign Up</Button>
                 </div>)
