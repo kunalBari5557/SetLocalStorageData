@@ -84,8 +84,9 @@ function SignInSignupWithLocalStorage(){
     }
    })
    const handleClick=(e)=>{
-       if(phone.current.value&&email.current.value&&password.current.value)
+       if(phone.current.value&&email.current.value&&password.current.value&&name.current.value)
       {
+        localStorage.setItem("name",name.current.value)
         localStorage.setItem("phone",phone.current.value)
         localStorage.setItem("email",email.current.value)
         localStorage.setItem("password",password.current.value)
