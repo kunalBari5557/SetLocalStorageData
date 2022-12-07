@@ -8,15 +8,73 @@ function SignInSignupWithLocalStorage(){
    const email=useRef()
    const phone=useRef()
    const password=useRef()
-   const ConfirmPassword=useRef()
    const [showHome,setShowHome]=useState(false)
    const [show,setShow]=useState(false)
     const localSignUp=localStorage.getItem("signUp")
     const localEmail=localStorage.getItem("email")
     const localPhone=localStorage.getItem("phone")
     const localPassword=localStorage.getItem("password")
-    const localConfirmPassword=localStorage.getItem("ConfirmPassword")
     const localName=localStorage.getItem("name")
+
+    const [input, setInput] = useState({
+        username: '',
+        password: '',
+        confirmPassword: ''
+      });
+     
+      const [error, setError] = useState({
+        username: '',
+        password: '',
+        confirmPassword: ''
+      })
+     
+      const onInputChange = e => {
+        const { name, value } = e.target;
+        setInput(prev => ({
+          ...prev,
+          [name]: value
+        }));
+        validateInput(e);
+      }
+     
+      const validateInput = e => {
+        let { name, value } = e.target;
+        setError(prev => {
+          const stateObj = { ...prev, [name]: "" };
+     
+          switch (name) {
+            case "username":
+              if (!value) {
+                stateObj[name] = "Please enter Username.";
+              }
+              break;
+     
+            case "password":
+              if (!value) {
+                stateObj[name] = "Please enter Password.";
+              } else if (input.confirmPassword && value !== input.confirmPassword) {
+                stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
+              } else {
+                stateObj["confirmPassword"] = input.confirmPassword ? "" : error.confirmPassword;
+              }
+              break;
+     
+            case "confirmPassword":
+              if (!value) {
+                stateObj[name] = "Please enter Confirm Password.";
+              } else if (input.password && value !== input.password) {
+                stateObj[name] = "Password and Confirm Password does not match.";
+              }
+              break;
+     
+            default:
+              break;
+          }
+     
+          return stateObj;
+        });
+      }
+      
    useEffect(()=>{
     if(localSignUp){
         setShowHome(true)
@@ -25,18 +83,17 @@ function SignInSignupWithLocalStorage(){
         setShow(true)
     }
    })
-   const handleClick=()=>{
-       if(phone.current.value&&email.current.value&&password.current.value&&name.current.value)
+   const handleClick=(e)=>{
+       if(phone.current.value&&email.current.value&&password.current.value)
       {
-        localStorage.setItem("name",name.current.value)
         localStorage.setItem("phone",phone.current.value)
         localStorage.setItem("email",email.current.value)
         localStorage.setItem("password",password.current.value)
-        localStorage.setItem("ConfirmPassword",ConfirmPassword.current.value)
         localStorage.setItem("signUp",email.current.value)
         // alert("Account created successfully!!")
         window.location.reload()
       }
+      onInputChange(e)
    }
 
    const handleSignIn=()=>{
@@ -60,7 +117,7 @@ function SignInSignupWithLocalStorage(){
                             <input placeholder="Phone Number" type='Phone' ref={phone} />
                         </div>
                         <div className="input_space">
-                            <input placeholder="Password" type='password' ref={password} />
+                            <input placeholder="Password" name="password" type='password' ref={password} />
                         </div>
                         <Button variant="contained" color="success" onClick={handleSignIn}>Sign In</Button>
                 </div>
@@ -68,7 +125,7 @@ function SignInSignupWithLocalStorage(){
                 <div className="container">
                         <h1>SignUp Page</h1>
                         <div className="input_space">
-                            <input placeholder="Name" type='text' ref={name} />
+                            <input placeholder="Name" type='text' name="username" ref={name} />
                         </div>
                         <div className="input_space">
                             <input placeholder="Email" type='text' ref={email} />
@@ -77,10 +134,20 @@ function SignInSignupWithLocalStorage(){
                             <input placeholder="Phone Number" type='Phone' ref={phone} />
                         </div>
                         <div className="input_space">
-                            <input placeholder="Password" type='password' ref={password} />
+                            <input placeholder="Password" name="password" type='password' ref={password}
+                            value={input.password}
+                            onChange={onInputChange}
+                            onBlur={validateInput}
+                            /><br></br>
+                            {error.password && <span className='err'>{error.password}</span>}
                         </div>
                         <div className="input_space">
-                            <input placeholder="Confirm Password" type='password' ref={ConfirmPassword} />
+                            <input placeholder="Confirm Password" type='password' ref={password}
+                            name="confirmPassword"
+                            onChange={onInputChange}
+                            onBlur={validateInput}
+                            /><br></br>
+                             {error.confirmPassword && <span className='err'>{error.confirmPassword}</span>}
                         </div>
                         <Button variant="contained"  onClick={handleClick}>Sign Up</Button>
                 </div>)
